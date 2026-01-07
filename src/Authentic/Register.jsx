@@ -57,7 +57,7 @@ function RegisterUser() {
     }
 
     try {
-      const res = await api.post("/register", formData);
+      const res = await api.post("/user/register", formData);
       toast.success(res.data.message || "Registered successfully");
       navigate("/login");
     } catch (err) {
@@ -66,78 +66,99 @@ function RegisterUser() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-500">
-      <form
-        onSubmit={handleSubmit}
-        className="w-96 rounded-lg bg-white p-6 shadow-lg"
-      >
-        <h2 className="text-2xl font-bold text-center mb-4">Register</h2>
+  <div className="min-h-screen bg-[#fafafa] flex items-center justify-center px-6">
+    <form
+      onSubmit={handleSubmit}
+      className="w-full max-w-sm bg-white border rounded-sm px-8 py-10"
+    >
+      
+      <h2 className="text-3xl font-semibold text-center mb-2">
+        Instaglam
+      </h2>
+      <p className="text-sm text-gray-500 text-center mb-8">
+        Sign up to see photos and videos from your friends.
+      </p>
 
+      
+      <div className="mb-5">
         <input
           type="text"
           name="username"
-          placeholder="Enter username"
-          className={`w-full p-2 border rounded ${
-            errors.username ? "border-red-500" : "border-gray-300"
-          }`}
-          onChange={handleChange}
+          placeholder="Username"
           value={formData.username}
+          onChange={handleChange}
+          className={`w-full px-4 py-2.5 border rounded-sm text-sm
+            focus:outline-none
+            ${errors.username ? "border-red-500" : "border-gray-300"}`}
         />
         {errors.username && (
           <p className="text-red-500 text-xs mt-1">{errors.username}</p>
         )}
+      </div>
 
+      
+      <div className="mb-5">
         <input
           type="email"
           name="email"
-          placeholder="Enter email"
-          className={`w-full p-2 mt-3 border rounded ${
-            errors.email ? "border-red-500" : "border-gray-300"
-          }`}
-          onChange={handleChange}
+          placeholder="Email address"
           value={formData.email}
+          onChange={handleChange}
+          className={`w-full px-4 py-2.5 border rounded-sm text-sm
+            focus:outline-none
+            ${errors.email ? "border-red-500" : "border-gray-300"}`}
         />
         {errors.email && (
           <p className="text-red-500 text-xs mt-1">{errors.email}</p>
         )}
+      </div>
 
+      
+      <div className="mb-6">
         <input
           type="password"
           name="password"
-          placeholder="Enter password"
-          className={`w-full p-2 mt-3 border rounded ${
-            errors.password ? "border-red-500" : "border-gray-300"
-          }`}
-          onChange={handleChange}
+          placeholder="Password"
           value={formData.password}
+          onChange={handleChange}
+          className={`w-full px-4 py-2.5 border rounded-sm text-sm
+            focus:outline-none
+            ${errors.password ? "border-red-500" : "border-gray-300"}`}
         />
         {errors.password && (
           <p className="text-red-500 text-xs mt-1">{errors.password}</p>
         )}
+      </div>
 
-        <button
-          type="submit"
-          disabled={!isFormValid}
-          onClick={()=> navigate("/profile")}
-          className={`w-full mt-4 py-2 rounded text-white ${
+      
+      <button
+        type="submit"
+        disabled={!isFormValid}
+        className={`w-full py-2.5 rounded-md text-sm font-medium text-white
+          ${
             isFormValid
-              ? "bg-blue-600 hover:bg-blue-700"
-              : "bg-gray-400 cursor-not-allowed"
+              ? "bg-blue-500 hover:bg-blue-600"
+              : "bg-blue-300 cursor-not-allowed"
           }`}
-        >
-          Register
-        </button>
+      >
+        Sign up
+      </button>
 
+      
+      <div className="text-center text-sm text-gray-500 mt-6">
+        Already have an account?{" "}
         <button
           type="button"
           onClick={() => navigate("/login")}
-          className="mt-4 w-full text-sm text-blue-600 hover:underline"
+          className="text-blue-500 font-medium hover:underline"
         >
-          Already registered? <span className="font-medium">Sign in</span>
+          Log in
         </button>
-      </form>
-    </div>
-  );
+      </div>
+    </form>
+  </div>
+);
+
 }
 
 export default RegisterUser;

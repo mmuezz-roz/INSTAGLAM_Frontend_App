@@ -1,8 +1,11 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileHeader() {
   const { user } = useContext(AuthContext);
+
+  const  navigate =useNavigate()
 
   return (
     <div className="flex gap-10 items-center py-10 border-b">
@@ -20,7 +23,9 @@ export default function ProfileHeader() {
       <div className="flex-1">
         <div className="flex items-center gap-4">
           <h2 className="text-xl font-semibold">{user?.username}</h2>
-          <button className="px-4 py-1 border rounded text-sm">
+          <button
+          onClick={()=> navigate("/edit-profile")}
+          className="px-4 py-1 border rounded text-sm">
             Edit Profile
           </button>
         </div>
@@ -34,7 +39,7 @@ export default function ProfileHeader() {
 
         
         <div className="mt-4 text-sm">
-          <p className="font-semibold">{user?.name}</p>
+          <p className="font-semibold">{user?.username}</p>
           <p>{user?.bio || "No bio yet"}</p>
         </div>
       </div>

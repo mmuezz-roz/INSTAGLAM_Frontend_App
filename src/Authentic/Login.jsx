@@ -19,56 +19,92 @@ export default function Login() {
     setError("");
 
     try {
-      const res = await api.post("/login", {
+      const res = await api.post("/user/login", {
         email,
         password,
       });
 
       login(res.data.user, res.data.token);
-      navigate("/Profile");
+      navigate("/profile");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
     }
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "100px auto" }}>
-      <h2>Login</h2>
+  <div className="min-h-screen w-full flex items-center justify-center bg-[#fafafa]">
+    <div className="w-full max-w-sm bg-white border rounded-sm px-8 py-10">
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      
+      <h2 className="text-3xl font-semibold text-center mb-2">
+        Instaglam
+      </h2>
+      <p className="text-sm text-gray-500 text-center mb-8">
+        Log in to your account
+      </p>
 
-      {/* Email / Password Login */}
-      <form onSubmit={handleSubmit}>
+      
+      {error && (
+        <p className="text-red-500 text-sm text-center mb-4">
+          {error}
+        </p>
+      )}
+
+      
+      <form onSubmit={handleSubmit} className="space-y-4">
+
         <input
           type="email"
-          placeholder="Email"
+          placeholder="Email address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className="w-full px-4 py-2.5 border rounded-sm text-sm
+          border-gray-300 focus:outline-none"
         />
-        <br /><br />
 
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          className="w-full px-4 py-2.5 border rounded-sm text-sm
+          border-gray-300 focus:outline-none"
         />
-        <br /><br />
 
-         <button  type="submit"  className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Login</button>
-                  <button
-                type="button"
-                 onClick={() => navigate("/register")}
-                 className="mt-4 w-full text-sm text-blue-600 hover:underline"> New here? Create an account
-                    <span className="font-medium ml-2">Sign up</span>
+        <button
+          type="submit"
+          className="w-full py-2.5 rounded-md text-sm font-medium
+          bg-blue-500 text-white hover:bg-blue-600 transition"
+        >
+          Log in
         </button>
       </form>
 
-      {/* Divider */}
-      <hr style={{ margin: "20px 0" }} />
+      
+      <div className="flex items-center gap-4 my-6">
+        <div className="flex-1 h-px bg-gray-300"></div>
+        <span className="text-xs text-gray-400 font-medium">OR</span>
+        <div className="flex-1 h-px bg-gray-300"></div>
+      </div>
 
-      {/* Google Login */}
-      <GoogleAuth/>
+      
+      <div className="flex justify-center">
+        <GoogleAuth />
+      </div>
+
+      
+      <div className="text-center text-sm text-gray-500 mt-8">
+        Don’t have an account?{" "}
+        <button
+          type="button"
+          onClick={() => navigate("/register")}
+          className="text-blue-500 font-medium hover:underline"
+        >
+          Sign up
+        </button>
+      </div>
     </div>
-  );
+  </div>
+);
+
 }

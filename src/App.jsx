@@ -8,6 +8,8 @@ import Profile from "./pages/Profile";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import MainLayout from "./components/MainLayout";
+import EditProfile from "./pages/EditProfile";
+import Sidebar from "./components/SideBar";
 
 export default function App() {
   const token = localStorage.getItem("token");
@@ -15,7 +17,6 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        
         <Route
           path="/"
           element={
@@ -35,10 +36,25 @@ export default function App() {
             <ProtectedRoute>
               <MainLayout>
                 <Profile />
+              
               </MainLayout>
             </ProtectedRoute>
           }
         />
+         <Route
+          path="/edit-profile" 
+
+          element={
+            <ProtectedRoute>
+              <MainLayout>
+                <Sidebar/>
+                <EditProfile/>
+              
+              </MainLayout>
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
     </BrowserRouter>
   );

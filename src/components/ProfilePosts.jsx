@@ -1,13 +1,7 @@
 export default function ProfilePosts() {
   
   const posts = [
-    "https://source.unsplash.com/random/300x300?1",
-    "https://source.unsplash.com/random/300x300?2",
-    "https://source.unsplash.com/random/300x300?3",
-    "https://source.unsplash.com/random/300x300?4",
-    "https://source.unsplash.com/random/300x300?5",
-    "https://source.unsplash.com/random/300x300?6",
-  ];
+  ]
 
   return (
     <div className="mt-8">

@@ -1,23 +1,33 @@
-import { GoogleLogin } from "@react-oauth/google";
-import api from "../api/axios";
+
+
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../api/axios";
+import { GoogleLogin } from "@react-oauth/google";
 import { AuthContext } from "../context/AuthContext";
 
 export default function GoogleAuth() {
   const { login } = useContext(AuthContext);
-
-  const handleSuccess = async (res) => {
-    const response = await api.post("/googlelog", {
-      token: res.credential,
-    });
-
-    login(response.data.user, response.data.token);
-  };
+  const navigate = useNavigate();
 
   return (
     <GoogleLogin
-      onSuccess={handleSuccess}
-      onError={() => console.log("Google Login Failed")}
+      onSuccess={async (credentialResponse) => {
+        try {
+          const res = await api.post("/user/googlelog", {
+            token: credentialResponse.credential,
+          });
+
+          login(res.data.user, res.data.token);
+          navigate("/profile");
+        } catch (err) {
+          console.error("Google login failed", err);
+        }
+      }}
+      onError={() => {
+        console.log("Google Login Failed");
+      }}
     />
   );
 }
+
