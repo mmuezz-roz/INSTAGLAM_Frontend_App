@@ -1,5 +1,7 @@
 
 import { createContext, useState, useEffect } from "react";
+import socket from "../Socket";
+
 
 export const AuthContext = createContext();
 
@@ -12,6 +14,14 @@ export const AuthProvider = ({ children }) => {
       setUser(JSON.parse(storedUser));
     }
   }, []);
+
+
+useEffect(() => {
+  if (user?._id) {
+    socket.emit("register", user._id);
+  }
+}, [user]);
+
 
   const login = (user, token) => {
     localStorage.setItem("user", JSON.stringify(user));

@@ -25,7 +25,7 @@ export default function Login() {
       });
 
       login(res.data.user, res.data.token);
-      navigate("/profile");
+      navigate("/home");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
     }

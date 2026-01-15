@@ -1,17 +1,31 @@
+// import Sidebar from "./Sidebar";
+// import { Outlet } from "react-router-dom";
+
+// export default function MainLayout() {
+//   return (
+//     <div className="flex">
+//       <Sidebar />
+
+//       <main className="ml-64 flex-1 px-6">
+//         <Outlet />
+//       </main>
+//     </div>
+//   );
+// }
 
 
-import Sidebar from "./SideBar";
+import Sidebar from "./Sidebar";
+import { Outlet } from "react-router-dom";
 
-
-export default function MainLayout({ children }) {
+export default function MainLayout() {
   return (
     <div className="flex">
-     
-      <Sidebar/>
+      {/* Sidebar */}
+      <Sidebar />
 
-      
-      <main className="ml-64 w-full min-h-screen bg-gray-50 p-6">
-        {children}
+      {/* Main content area */}
+      <main className="ml-64 w-full">
+        <Outlet />
       </main>
     </div>
   );
