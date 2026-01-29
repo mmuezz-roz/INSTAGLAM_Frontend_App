@@ -1,6 +1,3 @@
-
-
-
 import { useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import api from "../api/axios";
@@ -17,15 +14,17 @@ export default function UserProfile() {
   const [requestSent, setRequestSent] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // 🔹 FETCH USER PROFILE
+  /* ✅ HOOKS ALWAYS AT TOP */
   useEffect(() => {
-    setRequestSent(false); // 🔥 IMPORTANT: reset when switching profiles
+    if (!currentUser?._id) return;
+
     setLoading(true);
+    setRequestSent(false);
 
     const fetchUser = async () => {
       try {
         const res = await api.get(`/user/${userId}`);
-        const fetchedUser = res.data.user;
+        const { user: fetchedUser, isFollowing: followingStatus, requestSent: requestedStatus } = res.data;
 
         setProfileData({
           user: fetchedUser,
@@ -34,56 +33,51 @@ export default function UserProfile() {
           postCount: fetchedUser.postsCount || 0,
         });
 
-        // check follow state
-        setIsFollowing(
-          fetchedUser.followers.includes(currentUser._id)
-        );
+        setIsFollowing(followingStatus);
+        setRequestSent(requestedStatus);
       } catch (err) {
         console.error("Failed to load user profile", err);
+        setProfileData(null);
       } finally {
         setLoading(false);
       }
     };
 
     fetchUser();
-  }, [userId, currentUser._id]);
+  }, [userId, currentUser?._id]);
 
-  // 🔹 FOLLOW / UNFOLLOW / REQUEST
-  const handleFollow = async () => {
-    try {
-      const res = await api.post(`/user/${userId}/follow`);
-
-      // 🔒 private → request sent
-      if (res.data.requested) {
-        setRequestSent(true);
-        return;
-      }
-
-      // 🌍 public follow/unfollow
-      setIsFollowing(res.data.following);
-
-      // optimistic followers count update
-      setProfileData((prev) => ({
-        ...prev,
-        followersCount: res.data.following
-          ? prev.followersCount + 1
-          : prev.followersCount - 1,
-      }));
-    } catch (err) {
-      console.error("Follow action failed", err);
-    }
-  };
-
+  /* ✅ SAFE RETURNS AFTER HOOKS */
   if (loading) return <p className="p-6">Loading profile...</p>;
   if (!profileData) return <p className="p-6">User not found</p>;
 
-  // ✅ SAFE FLAGS
   const isOwnProfile = profileData.user._id === currentUser._id;
-
   const isLocked =
     profileData.user.isPrivate &&
     !isFollowing &&
     !isOwnProfile;
+
+  const handleFollow = async () => {
+    try {
+      const res = await api.post(`/user/${userId}/follow`);
+
+      const { following, requested } = res.data;
+
+      // Update both states
+      setIsFollowing(following);
+      setRequestSent(requested);
+
+      // Adjust follower count optimistically (prevent negative values)
+      setProfileData((prev) => {
+        let newCount = prev.followersCount;
+        if (following && !isFollowing) newCount += 1;
+        else if (!following && isFollowing) newCount = Math.max(0, newCount - 1);
+
+        return { ...prev, followersCount: newCount };
+      });
+    } catch (err) {
+      console.error("Follow action failed", err);
+    }
+  };
 
   return (
     <div className="w-full px-10">
@@ -95,7 +89,6 @@ export default function UserProfile() {
         onFollow={handleFollow}
       />
 
-      {/* 🔒 PRIVATE ACCOUNT MESSAGE */}
       {isLocked ? (
         <p className="mt-10 text-center text-gray-500">
           🔒 This account is private. Follow to see posts.
@@ -106,4 +99,3 @@ export default function UserProfile() {
     </div>
   );
 }
-

@@ -31,3 +31,51 @@ export default function GoogleAuth() {
   );
 }
 
+
+// import { createContext, useEffect, useState } from "react";
+// import api from "../api/axios";
+
+// export const AuthContext = createContext();
+
+// export const GoogleAuth = ({ children }) => {
+//   const [user, setUser] = useState(null);
+//   const [loading, setLoading] = useState(true); // 🔥 IMPORTANT
+
+//   useEffect(() => {
+//     const loadUser = async () => {
+//       const token = localStorage.getItem("token");
+//       if (!token) {
+//         setLoading(false);
+//         return;
+//       }
+
+//       try {
+//         const res = await api.get("/user/me"); // 🔐 VERIFY TOKEN
+//         setUser(res.data.user);
+//       } catch {
+//         localStorage.clear();
+//         setUser(null);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     loadUser();
+//   }, []);
+
+//   const login = (user, token) => {
+//     localStorage.setItem("token", token);
+//     setUser(user);
+//   };
+
+//   const logout = () => {
+//     localStorage.clear();
+//     setUser(null);
+//   };
+
+//   return (
+//     <AuthContext.Provider value={{ user, loading, login, logout }}>
+//       {children}
+//     </AuthContext.Provider>
+//   );
+// };

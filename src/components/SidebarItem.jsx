@@ -1,151 +1,41 @@
-// import { NavLink } from "react-router-dom";
-
-// export default function SidebarItem({ icon: Icon, label, to }) {
-//   return (
-//     <NavLink
-//       to={to}
-//       className={({ isActive }) =>
-//         `flex items-center gap-4 px-4 py-3 rounded-lg cursor-pointer
-//          hover:bg-gray-100 transition
-//          ${isActive ? "font-semibold" : ""}`
-//       }
-//     >
-//       <Icon size={22} />
-//       <span className="text-sm">{label}</span>
-//     </NavLink>
-//   );
-// }
-
-// import { NavLink } from "react-router-dom";
-
-// export default function SidebarItem({ icon: Icon, label, to, badge = 0 }) {
-//   return (
-//     <NavLink
-//       to={to}
-//       className={({ isActive }) =>
-//         `flex items-center gap-4 px-4 py-3 rounded-lg cursor-pointer
-//          hover:bg-gray-100 transition
-//          ${isActive ? "font-semibold bg-gray-100" : ""}`
-//       }
-//     >
-//       {/* ICON + BADGE WRAPPER */}
-//       <div className="relative">
-//         <Icon size={22} />
-
-//         {/* 🔴 NOTIFICATION BADGE */}
-//         {badge > 0 && (
-//           <span
-//             className="
-//               absolute -top-2 -right-2
-//               bg-red-500 text-white text-xs
-//               w-5 h-5 flex items-center justify-center
-//               rounded-full
-//             "
-//           >
-//             {badge}
-//           </span>
-//         )}
-//       </div>
-
-//       <span className="text-sm">{label}</span>
-//     </NavLink>
-//   );
-// }
-
-
-// import { NavLink } from "react-router-dom";
-
-// export default function SidebarItem({
-//   icon: Icon,
-//   label,
-//   to,
-//   onClick,
-//   badge = 0
-// }) {
-//   const content = (
-//     <div className="relative flex items-center gap-4 px-4 py-3">
-//       <Icon size={22} />
-
-//       <span className="text-sm">{label}</span>
-
-//       {/* 🔔 Notification Badge */}
-//       {badge > 0 && (
-//         <span className="absolute left-6 top-2 bg-red-500 text-white
-//           text-xs font-semibold px-1.5 py-0.5 rounded-full">
-//           {badge}
-//         </span>
-//       )}
-//     </div>
-//   );
-
-//   // If onClick is provided (Notifications), don’t use NavLink
-//   if (onClick) {
-//     return (
-//       <button
-//         onClick={onClick}
-//         className="w-full text-left rounded-lg hover:bg-gray-100 transition"
-//       >
-//         {content}
-//       </button>
-//     );
-//   }
-
-//   return (
-//     <NavLink
-//       to={to}
-//       className={({ isActive }) =>
-//         `rounded-lg hover:bg-gray-100 transition
-//          ${isActive ? "font-semibold" : ""}`
-//       }
-//     >
-//       {content}
-//     </NavLink>
-//   );
-// }
-
-
 import { NavLink } from "react-router-dom";
 
-export default function SidebarItem({
-  icon: Icon,
-  label,
-  to,
-  onClick,
-  badge = 0,
-}) {
-  const content = (
-    <div className="relative flex items-center gap-4 px-4 py-3">
-      <Icon size={22} />
-      <span className="text-sm">{label}</span>
-
-      {badge > 0 && (
-        <span className="absolute left-6 top-2 bg-red-500 text-white
-          text-xs font-semibold px-1.5 py-0.5 rounded-full">
-          {badge}
-        </span>
-      )}
-    </div>
-  );
-
-  if (onClick) {
-    return (
-      <button
-        onClick={onClick}
-        className="w-full text-left rounded-lg hover:bg-gray-100"
-      >
-        {content}
-      </button>
+export default function SidebarItem({ icon: Icon, label, to, onClick, badge, hideLabel, isActive: isForcedActive }) {
+    const content = (
+        <>
+            <div className="relative flex-shrink-0">
+                <Icon className={`text-2xl transition-transform ${isForcedActive ? "scale-110" : "group-hover:scale-110"}`} />
+                {badge > 0 && (
+                    <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white font-bold border-2 border-white">
+                        {badge > 9 ? "9+" : badge}
+                    </span>
+                )}
+            </div>
+            {!hideLabel && (
+                <span className="hidden lg:inline text-base whitespace-nowrap overflow-hidden transition-all duration-300">
+                    {label}
+                </span>
+            )}
+        </>
     );
-  }
 
-  return (
-    <NavLink
-      to={to}
-      className={({ isActive }) =>
-        `rounded-lg hover:bg-gray-100 ${isActive ? "font-semibold" : ""}`
-      }
-    >
-      {content}
-    </NavLink>
-  );
+    const baseClasses = `group flex items-center gap-4 px-4 py-3 rounded-lg transition-all duration-200 hover:bg-gray-100 w-full text-left active:scale-95 ${isForcedActive ? "bg-gray-100 font-bold border border-gray-200" : "font-medium"
+        }`;
+
+    const linkClasses = ({ isActive }) =>
+        `${baseClasses} ${isActive && !isForcedActive ? "font-bold" : ""}`;
+
+    if (onClick) {
+        return (
+            <button onClick={onClick} className={baseClasses}>
+                {content}
+            </button>
+        );
+    }
+
+    return (
+        <NavLink to={to} className={linkClasses}>
+            {content}
+        </NavLink>
+    );
 }
