@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import api from "../api/axios";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 function RegisterUser() {
   const [formData, setFormData] = useState({
@@ -9,6 +11,9 @@ function RegisterUser() {
     email: "",
     password: "",
   });
+
+  const { login } = useContext(AuthContext);
+
 
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -48,22 +53,43 @@ function RegisterUser() {
     formData.email &&
     formData.password;
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   if (!isFormValid) {
+  //     toast.error("Please fix validation errors");
+  //     return;
+  //   }
+
+  //   try {
+  //     const res = await api.post("/user/register", formData);
+  //     toast.success(res.data.message || "Registered successfully");
+  //     navigate("/login");
+  //   } catch (err) {
+  //     toast.error(err.response?.data?.message || "Registration failed");
+  //   }
+  // };
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!isFormValid) {
-      toast.error("Please fix validation errors");
-      return;
-    }
+  if (!isFormValid) {
+    toast.error("Please fix validation errors");
+    return;
+  }
 
-    try {
-      const res = await api.post("/user/register", formData);
-      toast.success(res.data.message || "Registered successfully");
-      navigate("/login");
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Registration failed");
-    }
-  };
+  try {
+    const res = await api.post("/user/register", formData);
+
+    // ✅ AUTO LOGIN AFTER REGISTER
+    login(res.data.user, res.data.token);
+
+    toast.success(res.data.message);
+    navigate("/home");
+  } catch (err) {
+    toast.error(err.response?.data?.message || "Registration failed");
+  }
+};
+
 
   return (
   <div className="min-h-screen bg-[#fafafa] flex items-center justify-center px-6">

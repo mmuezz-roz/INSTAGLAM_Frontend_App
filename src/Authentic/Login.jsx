@@ -3,6 +3,8 @@ import api from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
+import GoogleAuth from "./Googleauth";
+
 // import { GoogleAuth } from "./Googleauth";
 // import GoogleAuth from "./GoogleAuth";
 
@@ -91,8 +93,9 @@ export default function Login() {
 
 
         <div className="flex justify-center">
-          <GoogleLogin />
-        </div>
+  <GoogleAuth />
+</div>
+
 
 
         <div className="text-center text-sm text-gray-500 mt-8">
