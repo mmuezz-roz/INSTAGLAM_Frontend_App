@@ -1,8 +1,9 @@
 import { useEffect, useState, useContext } from "react";
-import api from "../api/axios";
+// import api from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
 import ProfileHeader from "../components/ProfileHeader";
 import ProfilePosts from "../components/ProfilePosts";
+import api from "../api/axios";
 
 export default function Profile() {
     const { user: currentUser } = useContext(AuthContext);
