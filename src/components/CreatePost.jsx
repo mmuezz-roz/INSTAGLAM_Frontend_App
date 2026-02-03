@@ -37,11 +37,11 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="bg-white w-full max-w-lg rounded-xl shadow border">
+    <div className="min-h-screen bg-gray-50 dark:bg-black flex items-start md:items-center justify-center p-0 md:px-4 transition-colors duration-300">
+      <div className="bg-white dark:bg-zinc-900 w-full max-w-lg md:rounded-xl md:shadow md:border dark:border-gray-800 min-h-screen md:min-h-0 dark:text-white">
 
         {/* Header */}
-        <div className="border-b px-4 py-3 text-center font-semibold">
+        <div className="border-b dark:border-gray-800 px-4 py-3 text-center font-semibold">
           Create new post
         </div>
 
@@ -50,7 +50,7 @@ export default function CreatePost() {
           {/* Upload Box */}
           <div
             onClick={() => fileInputRef.current.click()}
-            className="cursor-pointer border-2 border-dashed rounded-lg h-52 flex flex-col items-center justify-center text-gray-400 hover:border-gray-400 transition"
+            className="cursor-pointer border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-lg h-52 flex flex-col items-center justify-center text-gray-400 hover:border-gray-400 dark:hover:border-gray-500 transition"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +85,7 @@ export default function CreatePost() {
 
           {/* Selected count */}
           {images.length > 0 && (
-            <p className="text-sm text-gray-500 text-center">
+            <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
               {images.length} file{images.length > 1 && "s"} selected
             </p>
           )}
@@ -96,7 +96,7 @@ export default function CreatePost() {
               {images.map((img, index) => (
                 <div
                   key={index}
-                  className="aspect-square bg-gray-100 rounded overflow-hidden"
+                  className="aspect-square bg-gray-100 dark:bg-zinc-800 rounded overflow-hidden"
                 >
                   <img
                     src={URL.createObjectURL(img)}
@@ -114,7 +114,7 @@ export default function CreatePost() {
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
             rows={3}
-            className="w-full resize-none border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400"
+            className="w-full resize-none border dark:border-gray-800 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-400 bg-transparent dark:text-white"
           />
 
           {/* Submit */}

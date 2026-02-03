@@ -10,14 +10,14 @@ export default function UserListModal({ title, users, onClose }) {
             onClick={onClose}
         >
             <div
-                className="bg-white w-full max-w-sm rounded-xl overflow-hidden flex flex-col max-h-[70vh]"
+                className="bg-white dark:bg-zinc-900 w-full max-w-sm rounded-xl overflow-hidden flex flex-col max-h-[70vh] dark:text-white"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Header */}
-                <div className="flex items-center justify-between p-4 border-b">
+                <div className="flex items-center justify-between p-4 border-b dark:border-gray-800">
                     <div className="w-8" /> {/* Spacer */}
                     <h3 className="font-semibold text-center flex-1">{title}</h3>
-                    <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-full">
+                    <button onClick={onClose} className="p-1 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-full dark:text-white">
                         <FiX size={20} />
                     </button>
                 </div>
@@ -25,7 +25,7 @@ export default function UserListModal({ title, users, onClose }) {
                 {/* List */}
                 <div className="overflow-y-auto flex-1 py-1">
                     {users.length === 0 ? (
-                        <div className="p-10 text-center text-gray-500 text-sm">
+                        <div className="p-10 text-center text-gray-500 dark:text-gray-400 text-sm">
                             No users found.
                         </div>
                     ) : (
@@ -36,9 +36,9 @@ export default function UserListModal({ title, users, onClose }) {
                                     navigate(`/user/${u._id}`);
                                     onClose();
                                 }}
-                                className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors"
+                                className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-zinc-800 cursor-pointer transition-colors"
                             >
-                                <div className="w-11 h-11 rounded-full overflow-hidden border flex-shrink-0">
+                                <div className="w-11 h-11 rounded-full overflow-hidden border dark:border-gray-800 flex-shrink-0">
                                     <img
                                         src={u.profilePic || "/avatar.png"}
                                         className="w-full h-full object-cover"
@@ -46,8 +46,8 @@ export default function UserListModal({ title, users, onClose }) {
                                     />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <p className="font-semibold text-sm truncate">{u.username}</p>
-                                    <p className="text-xs text-gray-500 truncate">{u.bio || ""}</p>
+                                    <p className="font-semibold text-sm truncate dark:text-white">{u.username}</p>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{u.bio || ""}</p>
                                 </div>
                             </div>
                         ))

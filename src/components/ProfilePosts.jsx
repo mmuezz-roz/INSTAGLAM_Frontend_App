@@ -2,81 +2,10 @@
 
 
 
-// import { useEffect, useState } from "react";
-// import api from "../api/axios";
-// import PostModal from "./PostModal";
-
-// export default function ProfilePosts({ userId }) {
-//   const [posts, setPosts] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [selectedPost, setSelectedPost] = useState(null);
-
-//   useEffect(() => {
-//     if (!userId) return;
-
-//     const fetchPosts = async () => {
-//       try {
-//         const res = await api.get(`/post/posts/${userId}`);
-//         setPosts(res.data.posts);
-//       } catch (err) {
-//         console.error("Failed to fetch posts", err);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchPosts();
-//   }, [userId]);
-
-//   if (loading) {
-//     return <p className="text-center mt-10">Loading posts...</p>;
-//   }
-
-//   if (posts.length === 0) {
-//     return (
-//       <p className="text-center mt-10 text-gray-500">
-//         No posts yet
-//       </p>
-//     );
-//   }
-
-//   return (
-//     <>
-//       <div className="max-w-5xl mx-auto px-4 mt-6">
-//         <div className="grid grid-cols-3 gap-1 sm:gap-4">
-//           {posts.map((post) => (
-//             <div
-//               key={post._id}
-//               onClick={() => setSelectedPost(post)}
-//               className="aspect-square overflow-hidden cursor-pointer bg-black"
-//             >
-//               {/* <img
-//                 src={post.image} */}
-//                 <img src={post.images[0]}
-//                 alt="post"
-//                 className="w-full h-full object-cover hover:opacity-80 transition"
-//               />
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-
-//       {/* 🔥 MODAL */}
-//       {selectedPost && (
-//         <PostModal
-//           post={selectedPost}
-//           onClose={() => setSelectedPost(null)}
-//         />
-//       )}
-//     </>
-//   );
-// }
-
-
-
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import PostModal from "./PostModal";
+import { FiGrid } from "react-icons/fi";
 
 export default function ProfilePosts({ userId }) {
   const [posts, setPosts] = useState([]);
@@ -113,28 +42,35 @@ export default function ProfilePosts({ userId }) {
 
   if (posts.length === 0) {
     return (
-      <p className="text-center mt-10 text-gray-500">
-        No posts yet
-      </p>
+      <div className="flex flex-col items-center justify-center py-20 px-4 text-center dark:text-white">
+        <div className="w-16 h-16 border-2 border-black dark:border-white rounded-full flex items-center justify-center mb-4">
+          <FiGrid size={30} />
+        </div>
+        <h2 className="text-2xl font-bold mb-2">No Posts Yet</h2>
+        <p className="text-gray-500 dark:text-gray-400 text-sm max-w-xs">When you share photos, they will appear here on your profile.</p>
+      </div>
     );
   }
 
   return (
     <>
       {/* GRID */}
-      <div className="max-w-5xl mx-auto px-4 mt-6">
-        <div className="grid grid-cols-3 gap-1 sm:gap-4">
+      <div className="max-w-5xl mx-auto md:mt-2">
+        <div className="grid grid-cols-3 gap-[1px] md:gap-4 lg:gap-8 transition-colors duration-300">
           {posts.map((post) => (
             <div
               key={post._id}
               onClick={() => setSelectedPost(post)}
-              className="aspect-square overflow-hidden cursor-pointer bg-black"
+              className="relative aspect-square overflow-hidden cursor-pointer group bg-gray-100 dark:bg-zinc-900 border dark:border-gray-800"
             >
               <img
                 src={post.images[0]}
                 alt="post"
-                className="w-full h-full object-cover hover:opacity-80 transition"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-6 text-white font-bold">
+                {/* Visual placeholders for likes/comments would go here if available */}
+              </div>
             </div>
           ))}
         </div>

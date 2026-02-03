@@ -62,7 +62,7 @@
 
 import { createContext, useEffect, useState } from "react";
 import api from "../api/axios";
-import socket from "../Socket";
+import socket from "../socket";
 
 export const AuthContext = createContext();
 
@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const loadUser = async () => {
       const token = localStorage.getItem("token");
-    if (!token) {
+      if (!token) {
         setLoading(false);
         return;
       }
@@ -96,8 +96,15 @@ export const AuthProvider = ({ children }) => {
   // 🔌 socket register
   useEffect(() => {
     if (user?._id) {
+      const token = localStorage.getItem("token");
+      socket.auth.token = token;
+      socket.connect();
       socket.emit("register", user._id);
     }
+
+    return () => {
+      socket.disconnect();
+    };
   }, [user]);
 
   const login = (user, token) => {

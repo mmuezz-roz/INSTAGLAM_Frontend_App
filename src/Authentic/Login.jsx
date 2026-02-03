@@ -3,7 +3,7 @@ import api from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
-import GoogleAuth from "./Googleauth";
+import GoogleAuth from "./GoogleAuth";
 
 // import { GoogleAuth } from "./Googleauth";
 // import GoogleAuth from "./GoogleAuth";
@@ -36,12 +36,12 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-[#fafafa]">
-      <div className="w-full max-w-sm bg-white border rounded-sm px-8 py-10">
+    <div className="min-h-screen w-full flex items-center justify-center bg-white md:bg-[#fafafa] px-6 md:px-0">
+      <div className="w-full max-w-sm bg-white md:border md:rounded-sm px-0 md:px-8 md:py-10">
 
 
-        <h2 className="text-3xl font-semibold text-center mb-2">
-          Instaglam
+        <h2 className="text-4xl font-bold text-center mb-2" style={{ fontFamily: '"Fredoka", sans-serif' }}>
+          Sway
         </h2>
         <p className="text-sm text-gray-500 text-center mb-8">
           Log in to your account
@@ -93,8 +93,8 @@ export default function Login() {
 
 
         <div className="flex justify-center">
-  <GoogleAuth />
-</div>
+          <GoogleAuth />
+        </div>
 
 
 

@@ -80,7 +80,7 @@ export default function UserProfile() {
   };
 
   return (
-    <div className="w-full px-10">
+    <div className="w-full px-0 md:px-10">
       <ProfileHeader
         profileData={profileData}
         isOwnProfile={isOwnProfile}

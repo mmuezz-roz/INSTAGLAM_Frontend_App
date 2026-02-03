@@ -28,7 +28,7 @@ export default function Profile() {
     if (!profileData) return <div className="text-center mt-20">Profile not found</div>;
 
     return (
-        <div className="max-w-5xl mx-auto px-4">
+        <div className="max-w-5xl mx-auto px-0 md:px-4">
             <ProfileHeader
                 profileData={profileData}
                 isOwnProfile={true}

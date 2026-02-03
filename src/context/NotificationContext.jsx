@@ -35,11 +35,9 @@ export const NotificationProvider = ({ children }) => {
             return;
         }
 
-        // Initial fetch
         fetchNotifications();
         fetchUnread();
 
-        // Listen for new notifications
         socket.on("newNotification", async () => {
             await fetchNotifications();
             await fetchUnread();
