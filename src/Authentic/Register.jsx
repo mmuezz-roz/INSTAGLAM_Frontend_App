@@ -11,6 +11,9 @@ function RegisterUser() {
     email: "",
     password: "",
   });
+  const [otp, setOtp] = useState("");
+  const [showOtp, setShowOtp] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { login } = useContext(AuthContext);
 
@@ -69,16 +72,40 @@ function RegisterUser() {
   //     toast.error(err.response?.data?.message || "Registration failed");
   //   }
   // };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleSendOtp = async () => {
     if (!isFormValid) {
-      toast.error("Please fix validation errors");
+      toast.error("Please fill all fields correctly");
       return;
     }
 
+    setLoading(true);
     try {
-      const res = await api.post("/user/register", formData);
+      const res = await api.post("/user/send-otp", { email: formData.email });
+      toast.success(res.data.message);
+      setShowOtp(true);
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to send OTP");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!showOtp) {
+      handleSendOtp();
+      return;
+    }
+
+    if (!otp || otp.length !== 6) {
+      toast.error("Please enter a valid 6-digit OTP");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await api.post("/user/register", { ...formData, otp });
 
       // ✅ AUTO LOGIN AFTER REGISTER
       login(res.data.user, res.data.token);
@@ -87,6 +114,8 @@ function RegisterUser() {
       navigate("/home");
     } catch (err) {
       toast.error(err.response?.data?.message || "Registration failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -156,17 +185,32 @@ function RegisterUser() {
           )}
         </div>
 
+        {showOtp && (
+          <div className="mb-6 animate-in fade-in slide-in-from-top-2">
+            <input
+              type="text"
+              placeholder="Enter 6-digit OTP"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              maxLength={6}
+              className="w-full px-4 py-2.5 border border-blue-300 rounded-sm text-sm focus:outline-none text-center tracking-[0.5em] font-bold"
+            />
+            <p className="text-[10px] text-gray-400 mt-2 text-center">
+              Enter the OTP sent to {formData.email}
+            </p>
+          </div>
+        )}
 
         <button
           type="submit"
-          disabled={!isFormValid}
-          className={`w-full py-2.5 rounded-md text-sm font-medium text-white
-          ${isFormValid
+          disabled={!isFormValid || loading}
+          className={`w-full py-2.5 rounded-md text-sm font-medium text-white transition-all
+          ${isFormValid && !loading
               ? "bg-blue-500 hover:bg-blue-600"
               : "bg-blue-300 cursor-not-allowed"
             }`}
         >
-          Sign up
+          {loading ? "Please wait..." : showOtp ? "Verify & Register" : "Get OTP"}
         </button>
 
 

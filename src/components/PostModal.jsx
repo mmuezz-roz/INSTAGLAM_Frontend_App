@@ -286,7 +286,7 @@ export default function PostModal({ post, onClose, onDelete }) {
 
       {/* DELETE POST MODAL */}
       {showDeleteModal && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black/60 z-[120] flex items-center justify-center p-4 animate-in fade-in duration-200">
           <div className="bg-white dark:bg-zinc-900 w-[320px] rounded-xl overflow-hidden dark:text-white">
             <div className="p-5 text-center border-b dark:border-gray-800">
               <h3 className="font-semibold text-lg">Delete Post?</h3>
