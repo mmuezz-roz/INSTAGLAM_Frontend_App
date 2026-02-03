@@ -4,7 +4,7 @@ import MainLayout from "./components/MainLayout";
 
 // import Login from "./Authentic/Login";
 import RegisterUser from "./Authentic/Register";
-import Login from "./Authentic/login";
+import Login from "./Authentic/Login";
 // import { GoogleAuth } from "./Authentic/Googleauth";
 // import GoogleAuth from "./Authentic/GoogleAuth";
 
@@ -15,7 +15,7 @@ import CreatePost from "./components/CreatePost";
 import Notifications from "./pages/Notifications";
 import Home from "./pages/Home";
 import MessagesPage from "./pages/MessagePage";
-import GoogleAuth from "./Authentic/Googleauth";
+import GoogleAuth from "./Authentic/GoogleAuth";
 
 /* 🚪 AUTH GUARD FOR LOGIN/REGISTER */
 const PublicRoute = ({ children }) => {
