@@ -71,6 +71,15 @@ export default function Home() {
   const [commentInputs, setCommentInputs] = useState({});
   const [suggestions, setSuggestions] = useState([]);
   const [followLoading, setFollowLoading] = useState({});
+  const [activeEmojiPostId, setActiveEmojiPostId] = useState(null);
+  const emojis = ["😀", "😂", "😍", "🔥", "❤️", "👍", "🙌", "✨", "😢", "😮"];
+
+  const handleEmojiClick = (emoji, postId) => {
+    setCommentInputs(prev => ({
+      ...prev,
+      [postId]: (prev[postId] || "") + emoji
+    }));
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -246,9 +255,28 @@ export default function Home() {
 
               <form
                 onSubmit={(e) => handleAddComment(e, post._id)}
-                className="border-t border-gray-100 dark:border-gray-800 p-3 flex items-center gap-3 group"
+                className="border-t border-gray-100 dark:border-gray-800 p-3 flex items-center gap-3 group relative"
               >
-                <button type="button" className="text-gray-500 hover:text-black dark:hover:text-white">
+                {activeEmojiPostId === post._id && (
+                  <div className="absolute bottom-12 left-2 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-2 flex gap-1 z-10 animate-in fade-in slide-in-from-bottom-2">
+                    {emojis.map((emoji) => (
+                      <button
+                        key={emoji}
+                        type="button"
+                        onClick={() => handleEmojiClick(emoji, post._id)}
+                        className="hover:scale-125 transition-transform text-lg"
+                      >
+                        {emoji}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => setActiveEmojiPostId(activeEmojiPostId === post._id ? null : post._id)}
+                  className={`transition-colors ${activeEmojiPostId === post._id ? "text-yellow-500" : "text-gray-500 hover:text-black dark:hover:text-white"}`}
+                >
                   <FiSmile size={24} />
                 </button>
                 <input
