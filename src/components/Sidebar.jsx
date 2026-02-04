@@ -209,6 +209,9 @@ export default function Sidebar({ onSearchClick, isSearchOpen }) {
                     <button onClick={toggleTheme}>
                         {theme === "light" ? <FiMoon size={24} /> : <FiSun size={24} />}
                     </button>
+                    <button onClick={handleLogout} className="text-red-600">
+                        <FiLogOut size={24} />
+                    </button>
                 </div>
             </div>
         </>
