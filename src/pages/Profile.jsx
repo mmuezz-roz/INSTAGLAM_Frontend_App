@@ -24,7 +24,11 @@ export default function Profile() {
         fetchProfile();
     }, []);
 
-    if (loading) return <div className="text-center mt-20">Loading Profile...</div>;
+    if (loading) return (
+        <div className="flex justify-center items-center h-[60vh]">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 dark:border-white"></div>
+        </div>
+    );
     if (!profileData) return <div className="text-center mt-20">Profile not found</div>;
 
     return (

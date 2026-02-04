@@ -47,7 +47,11 @@ export default function UserProfile() {
   }, [userId, currentUser?._id]);
 
   /* ✅ SAFE RETURNS AFTER HOOKS */
-  if (loading) return <p className="p-6">Loading profile...</p>;
+  if (loading) return (
+    <div className="flex justify-center items-center h-[60vh]">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 dark:border-white"></div>
+    </div>
+  );
   if (!profileData) return <p className="p-6">User not found</p>;
 
   const isOwnProfile = profileData.user._id === currentUser._id;
