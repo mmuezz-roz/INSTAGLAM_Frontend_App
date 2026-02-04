@@ -47,7 +47,7 @@
 
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:5000", {
+const socket = io("https://sway-backend-app.onrender.com", {
   autoConnect: false,
   auth: {
     token: localStorage.getItem("token"),
