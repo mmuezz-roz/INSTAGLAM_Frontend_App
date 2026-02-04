@@ -68,9 +68,9 @@ export default function Messages() {
   };
 
   return (
-    <div className="flex h-[calc(100vh-6rem)] md:h-screen bg-white dark:bg-black overflow-hidden relative transition-colors duration-300 w-full">
+    <div className="flex h-[calc(100vh-6rem)] md:h-screen w-full bg-white dark:bg-black overflow-hidden relative transition-colors duration-300">
       {/* LEFT SIDEBAR: Chat List */}
-      <div className={`w-full md:w-[350px] flex flex-col border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-black z-10 ${activeChat ? 'hidden md:flex' : 'flex'}`}>
+      <div className={`w-full md:w-[350px] flex-shrink-0 flex flex-col border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-black z-10 ${activeChat ? 'hidden md:flex' : 'flex'}`}>
         <div className="px-6 py-5 flex items-center justify-between sticky top-0 bg-white dark:bg-black">
           <div className="flex items-center gap-2 cursor-pointer group">
             <h2 className="text-xl font-bold text-black dark:text-white">{user?.username}</h2>
@@ -97,7 +97,7 @@ export default function Messages() {
       </div>
 
       {/* RIGHT SIDE: Chat Window */}
-      <div className={`flex-1 flex flex-col relative bg-white dark:bg-black h-full ${!activeChat ? 'hidden md:flex' : 'flex'}`}>
+      <div className={`flex-1 w-full max-w-full flex flex-col relative bg-white dark:bg-black h-full ${!activeChat ? 'hidden md:flex' : 'flex'}`}>
         {activeChat ? (
           <ChatWindow conversation={activeChat} onBack={() => setActiveChat(null)} />
         ) : (
