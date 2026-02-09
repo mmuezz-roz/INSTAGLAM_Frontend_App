@@ -165,7 +165,7 @@ export default function PostModal({ post, onClose, onDelete }) {
                 {isOwner && (
                   <button
                     onClick={() => setShowDeleteModal(true)}
-                    className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-900 text-red-500"
+                    className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-900 text-red-500 mb-2  "
                   >
                     <FaTrash size={16} />
                   </button>
